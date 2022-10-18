@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nyuz">
+    <!--  chenges -->
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="nyuz"
         android:name="${applicationName}"
