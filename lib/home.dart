@@ -26,6 +26,7 @@ class _HomeState extends State<Home> {
   ];
 
   bool isLoading = true;
+
   getNewsByQuery(String query) async {
     Map element;
     int i = 0;
@@ -43,17 +44,19 @@ class _HomeState extends State<Home> {
           setState(() {
             isLoading = false;
           });
-          //newsModelList.sublist(0,5);
+          /// Display only five news on the screen
           if (i == 5) {
             break;
           }
-        } catch (e) {
+        }
+        catch (e) {
           print(e);
         };
       }
     });
   }
 
+  /// Data fetching for carousel
   getNewsofIndia() async {
     String url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=54b183bd892847cb8d138d9679b534f6";
     Response response = await get(Uri.parse(url));
@@ -68,18 +71,17 @@ class _HomeState extends State<Home> {
         });
       });
     });
-
-
   }
 
-
+ /// It is a entry point for the stateful widget and called only and only once
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getNewsByQuery("corona");
+    getNewsByQuery("technology");
     getNewsofIndia();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,12 +96,14 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            /// Search Container
             Container(
-              //Search Container
               padding: EdgeInsets.symmetric(horizontal: 8),
               margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(24)),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24)
+              ),
               child: Row(
                 children: [
                   GestureDetector(
@@ -118,11 +122,14 @@ class _HomeState extends State<Home> {
                       margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
                     ),
                   ),
+                  /// Use expanded to take all available space for search textfield
                   Expanded(
                     child: TextField(
                       controller: searchController,
+                      /// textInputAction will override symbol in keyboard and provide search icon on keyboard
                       textInputAction: TextInputAction.search,
                       onSubmitted: (value) {
+                        /// Validating search
                         if(value == ""){
                           print("Blank Search");
                         }
@@ -137,20 +144,27 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
+            /// Categories Container
             Container(
                 height: 50,
                 child: ListView.builder(
+                   /// All the items in list will occupy only necessary space but if we set shrinkWrap to false then it would
+                  /// occupy all the available space
                     shrinkWrap: true,
+                    /// TO scroll horizontally
                     scrollDirection: Axis.horizontal,
                     itemCount: navBarItem.length,
                     itemBuilder: (context, index) {
+                      /// InkWell to detect touch
                       return InkWell(
                         onTap: () {
                           Navigator.push(context,MaterialPageRoute(builder: (context) => Category(Query: navBarItem[index])));
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                              horizontal: 20,
+                              vertical: 10
+                          ),
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
                               color: Color(0xfff2ce50),
@@ -160,13 +174,18 @@ class _HomeState extends State<Home> {
                                 style: TextStyle(
                                     fontSize: 19,
                                     color: Color(0xff232321),
-                                    fontWeight: FontWeight.bold)),
+                                    fontWeight: FontWeight.bold)
+                            ),
                           ),
                         ),
                       );
-                    })),
+                    }
+                    )
+            ),
+            /// Carousel Container
             Container(
               margin: EdgeInsets.symmetric(vertical: 15),
+              /// Set Container and loader accoring to state
               child: isLoading ?
               Container(
                   height: 200,
@@ -189,8 +208,10 @@ class _HomeState extends State<Home> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)
                               ),
+                              /// Stack makes a layer of widgets by putting them on top of each other
                               child : Stack(
                                   children : [
+                                    /// provides us with a widget that clips its child using a rounded rectangle
                                     ClipRRect(
                                         borderRadius : BorderRadius.circular(10),
                                         child : Image.network(instance.newsImg , fit: BoxFit.fitHeight, width: double.infinity,)
@@ -240,6 +261,7 @@ class _HomeState extends State<Home> {
                 }).toList(),
               ) ,
             ),
+            /// Main Container
             Container(
               child: Column(
                 children: [
@@ -258,6 +280,7 @@ class _HomeState extends State<Home> {
                         valueColor: new AlwaysStoppedAnimation<Color>(Colors.black54),
                       ),)) :
                   ListView.builder(
+                    /// prevents scrolling inside your scrollable widget
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: newsModelList.length,
@@ -270,13 +293,19 @@ class _HomeState extends State<Home> {
                             },
                             child: Card(
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
+                                    borderRadius: BorderRadius.circular(15)
+                                ),
                                 elevation: 1.0,
                                 child: Stack(
                                   children: [
                                     ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
-                                        child: Image.network(newsModelList[index].newsImg ,fit: BoxFit.fitHeight, height: 230,width: double.infinity, )
+                                        /// To work with images from a URL
+                                        child: Image.network(
+                                          newsModelList[index].newsImg ,
+                                          fit: BoxFit.fitHeight,
+                                          height: 230,
+                                          width: double.infinity, )
                                     ),
                                     Positioned(
                                         left: 0,
@@ -305,7 +334,12 @@ class _HomeState extends State<Home> {
                                                       fontSize: 18,
                                                       fontWeight: FontWeight.bold),
                                                 ),
-                                                Text(newsModelList[index].newsDes.length > 50 ? "${newsModelList[index].newsDes.substring(0,55)}...." : newsModelList[index].newsDes , style: TextStyle(color: Colors.white , fontSize: 12)
+                                                Text(
+                                                  /// Display only 50 characters of news description
+                                                  newsModelList[index].newsDes.length > 50 ?
+                                                  "${newsModelList[index].newsDes.substring(0,55)}...." :
+                                                  newsModelList[index].newsDes ,
+                                                  style: TextStyle(color: Colors.white , fontSize: 12)
                                                   ,)
                                               ],
                                             )))
@@ -314,17 +348,15 @@ class _HomeState extends State<Home> {
                           ),
                         );
                       }),
+                  /// Show more container
                   Container(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        /*ElevatedButton(onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Category(Query: "Technology")));
-                        }, child: Text("SHOW MORE")),*/
                         ElevatedButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Category(Query: "Technology")));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Category(Query: "India")));
                             },
                             style: ElevatedButton.styleFrom(
                               primary: Color(0xfff2ce50),

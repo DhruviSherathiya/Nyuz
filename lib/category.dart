@@ -23,6 +23,10 @@ class _CategoryState extends State<Category> {
       url =
       "https://newsapi.org/v2/top-headlines?country=us&apiKey=54b183bd892847cb8d138d9679b534f6";
     }
+    else if(query == "Bussiness"){
+      url =
+      "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=54b183bd892847cb8d138d9679b534f6";
+    }
     else {
       url =
           "https://newsapi.org/v2/everything?q=$query&from=2022-10-01&sortBy=publishedAt&apiKey=54b183bd892847cb8d138d9679b534f6";
@@ -37,7 +41,6 @@ class _CategoryState extends State<Category> {
         setState(() {
           isLoading = false;
         });
-
       });
     });
 

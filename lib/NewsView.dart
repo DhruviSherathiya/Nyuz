@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-class NewsView extends StatefulWidget {
 
+class NewsView extends StatefulWidget {
   String url;
   NewsView(this.url);
   @override
