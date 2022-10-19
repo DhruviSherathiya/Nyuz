@@ -23,7 +23,7 @@ Flutter News App with newsapi.org. Developed using the Test Driven Development.
       flutter pub upgrade 
       flutter run
     </pre>
-  3) Go to newsapi.org website and create an account. Get the API key and replace that in home.dart and category.dart files. 
+  3) Go to [newsapi.org](newsapi.org) website and create an account. Get the API key and replace that in home.dart and category.dart files. 
   4) Your project is now ready to run !!
 
 ### Created By:-
