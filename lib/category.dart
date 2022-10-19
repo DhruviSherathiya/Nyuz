@@ -17,15 +17,15 @@ class _CategoryState extends State<Category> {
     String url = "";
     if(query == "Top News" || query == "India"){
       url =
-          "https://newsapi.org/v2/top-headlines?country=in&apiKey=5ab348bd60364d8d8d18a9fa855ddaae";
+          "https://newsapi.org/v2/top-headlines?country=in&apiKey=54b183bd892847cb8d138d9679b534f6";
     }
     else if(query == "World"){
       url =
-      "https://newsapi.org/v2/top-headlines?country=us&apiKey=5ab348bd60364d8d8d18a9fa855ddaae";
+      "https://newsapi.org/v2/top-headlines?country=us&apiKey=54b183bd892847cb8d138d9679b534f6";
     }
     else {
       url =
-          "https://newsapi.org/v2/everything?q=$query&from=2022-10-01&sortBy=publishedAt&apiKey=5ab348bd60364d8d8d18a9fa855ddaae";
+          "https://newsapi.org/v2/everything?q=$query&from=2022-10-01&sortBy=publishedAt&apiKey=54b183bd892847cb8d138d9679b534f6";
     }
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
@@ -53,7 +53,11 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nyuz"),
+        title: Text(
+            "Nyuz",
+          style: TextStyle(color: Color(0xfff2ce50), fontSize:25),
+        ),
+        backgroundColor: Color(0xff232321),
         centerTitle: true,
 
       ),
@@ -76,7 +80,9 @@ class _CategoryState extends State<Category> {
                 ),
               ),
               isLoading ? Container(height: MediaQuery.of(context).size.height - 500,
-                  child :Center(child: CircularProgressIndicator() ,)) :
+                  child :Center(child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.black54),
+                  ) ,)) :
               ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -134,7 +140,17 @@ class _CategoryState extends State<Category> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: () {}, child: Text("SHOW MORE")),
+                    // ElevatedButton(onPressed: () {}, child: Text("SHOW MORE")),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xfff2ce50),
+                      ),
+                      child: Text(
+                        "SHOW MORE",
+                        style: TextStyle(color: Color(0xff232321)),
+                      ),
+                    ),
                   ],
                 ),
               )

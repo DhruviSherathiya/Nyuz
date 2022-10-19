@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
     Map element;
     int i = 0;
     String url =
-        "https://newsapi.org/v2/everything?q=$query&from=2022-10-01&sortBy=publishedAt&apiKey=5ab348bd60364d8d8d18a9fa855ddaae";
+        "https://newsapi.org/v2/everything?q=$query&from=2022-10-01&sortBy=publishedAt&apiKey=54b183bd892847cb8d138d9679b534f6";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     setState(() {
@@ -52,12 +52,10 @@ class _HomeState extends State<Home> {
         };
       }
     });
-
-
   }
 
   getNewsofIndia() async {
-    String url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=5ab348bd60364d8d8d18a9fa855ddaae";
+    String url = "https://newsapi.org/v2/top-headlines?country=in&apiKey=54b183bd892847cb8d138d9679b534f6";
     Response response = await get(Uri.parse(url));
     Map data = jsonDecode(response.body);
     setState(() {
@@ -68,7 +66,6 @@ class _HomeState extends State<Home> {
         setState(() {
           isLoading = false;
         });
-
       });
     });
 
@@ -87,15 +84,18 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nyuz"),
+        title: Text(
+          "Nyuz",
+          style: TextStyle(color: Color(0xfff2ce50), fontSize:25),
+        ),
+        backgroundColor: Color(0xff232321),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              //Search Wala Container
-
+              //Search Container
               padding: EdgeInsets.symmetric(horizontal: 8),
               margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               decoration: BoxDecoration(
@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
                     child: Container(
                       child: Icon(
                         Icons.search,
-                        color: Colors.blueAccent,
+                        color: Color(0xff232321),
                       ),
                       margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
                     ),
@@ -153,13 +153,13 @@ class _HomeState extends State<Home> {
                               horizontal: 20, vertical: 10),
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
-                              color: Colors.blueAccent,
+                              color: Color(0xfff2ce50),
                               borderRadius: BorderRadius.circular(15)),
                           child: Center(
                             child: Text(navBarItem[index],
                                 style: TextStyle(
                                     fontSize: 19,
-                                    color: Colors.white,
+                                    color: Color(0xff232321),
                                     fontWeight: FontWeight.bold)),
                           ),
                         ),
@@ -170,7 +170,9 @@ class _HomeState extends State<Home> {
               child: isLoading ?
               Container(
                   height: 200,
-                  child: Center(child: CircularProgressIndicator())
+                  child: Center(child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.black54),
+                  ))
               ) :
               CarouselSlider(
                 options: CarouselOptions(
@@ -231,8 +233,8 @@ class _HomeState extends State<Home> {
                         )
                     );
                     }catch(e){
-                      print(e);
-                      return Container();
+                     print(e);
+                     return Container(child: Text("Error"),);
                     }
                   });
                 }).toList(),
@@ -252,7 +254,9 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   isLoading ? Container(height: MediaQuery.of(context).size.height - 450,
-                      child :Center(child: CircularProgressIndicator() ,)) :
+                      child :Center(child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(Colors.black54),
+                      ),)) :
                   ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -315,9 +319,21 @@ class _HomeState extends State<Home> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(onPressed: () {
+                        /*ElevatedButton(onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Category(Query: "Technology")));
-                        }, child: Text("SHOW MORE")),
+                        }, child: Text("SHOW MORE")),*/
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Category(Query: "Technology")));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Color(0xfff2ce50),
+                            ),
+                            child: Text(
+                              "SHOW MORE",
+                              style: TextStyle(color: Color(0xff232321)),
+                            ),
+                        ),
                       ],
                     ),
                   )
