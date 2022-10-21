@@ -1,7 +1,6 @@
 # Nyuz
 The purpose of the project is to develop an application which will display news articles approved at backend. User can browse news articles through various categories. App will enable user to view news details.
 <br><br>
-
 <img src="image.png" >
 <br>
 
