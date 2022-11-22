@@ -4,7 +4,7 @@ The purpose of the project is to develop an application which will display news 
 <img src="image.png" >
 <br>
 
-### Flutter News App
+## Flutter News App
 Flutter News App with newsapi.org. Developed using the Test Driven Development.
 
 ### News App Features
